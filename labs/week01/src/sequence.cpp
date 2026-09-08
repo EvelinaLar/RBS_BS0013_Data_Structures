@@ -2,20 +2,24 @@
 #include <vector>
 
 void print_values(const std::vector<int>& values) {
-    (void)values;  // Remove this placeholder when the function is implemented.
-    // TODO: print every value followed by a space, then print a newline.
+    for (int v : values) {
+        std::cout << v << ' ';
+    }
+    std::cout << '\n';
 }
 
 int sum(const std::vector<int>& values) {
-    (void)values;  // Remove this placeholder when the function is implemented.
-    // TODO: calculate and return the sum of the values.
-    return 0;
+    int total = 0;
+    for (int v : values) {
+        total += v;
+    }
+    return total;
 }
 
 void add_to_all(std::vector<int>& values, int amount) {
-    (void)values;  // Remove these placeholders when the function is implemented.
-    (void)amount;
-    // TODO: add amount to every element.
+    for (int& v : values) {
+        v += amount;
+    }
 }
 
 int main() {

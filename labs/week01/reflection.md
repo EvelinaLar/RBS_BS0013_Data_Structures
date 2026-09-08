@@ -6,13 +6,13 @@ Write concise answers in your own words.
 
 What is the difference between `src/hello.cpp` and `build/manual/hello` after compilation?
 
-Answer:
+Answer: src/hello.cpp is the raw code file you write, and build/manual/hello is the compiled program you run.
 
 ## 2. Compiler warnings
 
 What is the purpose of `-Wall -Wextra -Wpedantic`?
 
-Answer:
+Answer: They turn on strict compiler warnings to help you catch mistakes early.
 
 ## 3. Value and reference parameters
 
@@ -23,7 +23,7 @@ void f(std::vector<int> values);
 void f(std::vector<int>& values);
 ```
 
-Answer:
+Answer: The first passes a copy of the vector, while the second passes a reference to the original.
 
 ## 4. Const reference
 
@@ -33,17 +33,17 @@ Why can this parameter form be useful?
 void print(const std::vector<int>& values);
 ```
 
-Answer:
+Answer: It avoids the overhead of copying data while using const to make sure the function can't accidentally mess up your original data.
 
 ## 5. Linux navigation
 
 Which command shows the current working directory?
 
-Answer:
+Answer:pwd
 
 ## 6. Git state
 
 Which command shows modified files?
 
-Answer:
+Answer: git status
 
