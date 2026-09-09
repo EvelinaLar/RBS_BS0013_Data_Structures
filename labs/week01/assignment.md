@@ -542,11 +542,14 @@ Before running it:
 **What will it print?**
 
 Write down your prediction.
+11
 
 Now compile and run it.
+g++ -std=c++20 -Wall -Wextra -Wpedantic src/value_reference.cpp -o build/manual/value_reference
+./build/manual/value_reference
 
 Explain why the result occurs.
-
+It did not change because the function operated on a temporary copy of the variable rather than the original variable itself.
 ---
 
 # 12. Pass by reference
@@ -564,11 +567,12 @@ void increment(int& x)
 ```
 
 Predict again.
-
+11
 Compile and run.
-
+g++ -std=c++20 -Wall -Wextra -Wpedantic src/value_reference.cpp -o build/manual/value_reference
+./build/manual/value_reference
 What changed?
-
+The output
 Explain the difference between:
 
 ```cpp
@@ -580,7 +584,7 @@ and:
 ```cpp
 int& x
 ```
-
+The difference is that with int x, the main function result does not change, but with the &, it modifies the original value.
 ---
 
 # 13. Working with `std::vector`
@@ -605,7 +609,8 @@ int main() {
 ```
 
 Compile and run it.
-
+g++ -std=c++20 -Wall -Wextra -Wpedantic src/vector_basics.cpp -o build/manual/vector_basics
+./build/manual/vector_basics
 Now modify the program so the vector contains:
 
 ```text
@@ -640,12 +645,17 @@ a.push_back(4);
 Without running the program, predict:
 
 ```text
-a = ?
-b = ?
-c = ?
+a = 20
+b = 10
+c = 20
 ```
 
 Then write code to print all three containers and test your prediction.
+
+real results:
+a = 1 20 3 4 
+b = 10 2 3 
+c = 1 20 3 4 
 
 ## Explain
 
@@ -660,6 +670,8 @@ What happened when we wrote:
 ```cpp
 auto& c = a;
 ```
+auto b = a; creates a separate copy that can be modified independently, whereas auto& c = a; creates a direct nickname so changes to it affect the original vector.
+
 
 This distinction will become increasingly important when our structures become larger and more complicated.
 
@@ -679,7 +691,13 @@ Implement:
 void print_values(const std::vector<int>& values);
 ```
 
-The function should print all values.
+The function should print all values:
+void print_values(const std::vector<int>& values) {
+    for (int v : values) {
+        std::cout << v << ' ';
+    }
+    std::cout << '\n';
+}
 
 Implement:
 
@@ -687,7 +705,14 @@ Implement:
 int sum(const std::vector<int>& values);
 ```
 
-The function should return their sum.
+The function should return their sum:
+int sum(const std::vector<int>& values) {
+    int total = 0;
+    for (int v : values) {
+        total += v;
+    }
+    return total;
+}
 
 Implement:
 
@@ -695,7 +720,12 @@ Implement:
 void add_to_all(std::vector<int>& values, int amount);
 ```
 
-The function should add `amount` to every element.
+The function should add `amount` to every element:
+void add_to_all(std::vector<int>& values, int amount) {
+    for (int& v : values) {
+        v += amount;
+    }
+}
 
 For example:
 
@@ -742,10 +772,11 @@ void add_to_all(std::vector<int> values, int amount)
 Compile and run again.
 
 What happens?
+The code compiles and runs, but the vector in main() remains unchanged.
 
 The function itself still modifies something.
 
-So why does the vector in `main()` remain unchanged?
+So why does the vector in `main()` remain unchanged? The local copy is destroyed when the function ends, leaving the original vector untouched.
 
 Restore the correct version afterwards.
 
@@ -994,21 +1025,21 @@ What Git command tells you which files have been modified?
 
 Before leaving, verify that you can do all of the following.
 
-- [ ] Open the course environment in Codespaces.
-- [ ] Locate files using VS Code Explorer.
-- [ ] Open the integrated terminal.
-- [ ] Use `pwd`, `ls` and `cd`.
-- [ ] Check the C++ compiler version.
-- [ ] Compile a `.cpp` file manually.
-- [ ] Run the resulting executable.
-- [ ] Interpret a basic compiler error.
-- [ ] Recognize a compiler warning.
-- [ ] Use `std::vector`.
-- [ ] Explain pass-by-value versus pass-by-reference.
-- [ ] Set a breakpoint and inspect variables.
-- [ ] Run `git status`.
-- [ ] Inspect changes with `git diff`.
-- [ ] Preserve your completed work as instructed.
+- [ x] Open the course environment in Codespaces.
+- [x ] Locate files using VS Code Explorer.
+- [ x] Open the integrated terminal.
+- [ x] Use `pwd`, `ls` and `cd`.
+- [x ] Check the C++ compiler version.
+- [x ] Compile a `.cpp` file manually.
+- [x ] Run the resulting executable.
+- [x ] Interpret a basic compiler error.
+- [ x] Recognize a compiler warning.
+- [ x] Use `std::vector`.
+- [ x] Explain pass-by-value versus pass-by-reference.
+- [ x] Set a breakpoint and inspect variables.
+- [ x] Run `git status`.
+- [ x] Inspect changes with `git diff`.
+- [ x] Preserve your completed work as instructed.
 
 ---
 
