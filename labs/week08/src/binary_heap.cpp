@@ -2,12 +2,7 @@
 
 #include <stdexcept>
 #include <utility>
-
-namespace {
-[[noreturn]] void todo(const char* operation) {
-    throw std::logic_error(operation);
-}
-}  // namespace
+#include <algorithm>
 
 BinaryHeap::BinaryHeap(std::vector<int> values)
     : data_(std::move(values)) {
@@ -15,47 +10,94 @@ BinaryHeap::BinaryHeap(std::vector<int> values)
 }
 
 const int& BinaryHeap::top() const {
-    todo("TODO: implement top()");
+    if (data_.empty()) {
+        throw std::out_of_range("BinaryHeap is empty");
+    }
+    return data_.front();
 }
 
 void BinaryHeap::push(int value) {
-    (void)value;
-    todo("TODO: implement push() and sift-up");
+    data_.push_back(value);
+    sift_up(data_.size() - 1);
 }
 
 void BinaryHeap::pop() {
-    todo("TODO: implement pop() and sift-down");
+    if (data_.empty()) {
+        throw std::out_of_range("BinaryHeap is empty");
+    }
+    data_.front() = data_.back();
+    data_.pop_back();
+    if (!data_.empty()) {
+        sift_down(0);
+    }
 }
 
 bool BinaryHeap::check_invariant() const {
-    todo("TODO: implement check_invariant()");
+    for (std::size_t i = 0; i < data_.size(); ++i) {
+        std::size_t l = left(i);
+        std::size_t r = right(i);
+        if (l < data_.size() && data_[l] > data_[i]) {
+            return false;
+        }
+        if (r < data_.size() && data_[r] > data_[i]) {
+            return false;
+        }
+    }
+    return true;
 }
 
 std::size_t BinaryHeap::parent(std::size_t i) {
-    (void)i;
-    todo("TODO: implement parent()");
+    return (i - 1) / 2;
 }
 
 std::size_t BinaryHeap::left(std::size_t i) {
-    (void)i;
-    todo("TODO: implement left()");
+    return 2 * i + 1;
 }
 
 std::size_t BinaryHeap::right(std::size_t i) {
-    (void)i;
-    todo("TODO: implement right()");
+    return 2 * i + 2;
 }
 
 void BinaryHeap::sift_up(std::size_t i) {
-    (void)i;
-    todo("TODO: implement sift_up()");
+    while (i > 0) {
+        std::size_t p = parent(i);
+        if (data_[i] > data_[p]) {
+            std::swap(data_[i], data_[p]);
+            i = p;
+        } else {
+            break;
+        }
+    }
 }
 
 void BinaryHeap::sift_down(std::size_t i) {
-    (void)i;
-    todo("TODO: implement sift_down()");
+    std::size_t size = data_.size();
+    while (true) {
+        std::size_t largest = i;
+        std::size_t l = left(i);
+        std::size_t r = right(i);
+
+        if (l < size && data_[l] > data_[largest]) {
+            largest = l;
+        }
+        if (r < size && data_[r] > data_[largest]) {
+            largest = r;
+        }
+
+        if (largest != i) {
+            std::swap(data_[i], data_[largest]);
+            i = largest;
+        } else {
+            break;
+        }
+    }
 }
 
 void BinaryHeap::heapify() {
-    todo("TODO: implement bottom-up heapify()");
+    if (data_.empty()) {
+        return;
+    }
+    for (long long i = static_cast<long long>(data_.size() - 1) / 2; i >= 0; --i) {
+        sift_down(static_cast<std::size_t>(i));
+    }
 }
